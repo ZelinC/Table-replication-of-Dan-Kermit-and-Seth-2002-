@@ -1,0 +1,118 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LaTeX snippet: language and style definition of Stata for listings package.
+%                [listings](http://www.ctan.org/pkg/listings) 
+%                [Stata](http://www.stata.com/)
+%
+% Usage:
+%     Copy the code into your preamble, or import it by `\include` .
+%     then in your doc:
+%     \lstinputlisting[style=numbers]{DO-SCRIPT}
+%     \lstinputlisting[style=numbers, style=stata-editor]{DO-SCRIPT}
+%     \lstinputlisting[style=nonumbers, frame=none]{DO-SCRIPT}
+% How it works:
+%     - The language is defined by `\lstdefinelanguage{Stata}`
+%     - Four styles is defined by `\lstdefinestyle{STYLE-NAME}`, 
+%       they are: numbers and no numbers, plain(black and white) and colorful
+%       (colored roughly like stata editor.)
+% Tips:
+%     - Generally you only need to set your default in the last part,
+%       that is, code inside of `\lstset`.
+%     - Add more keywords(I can not list all of them) in the `\lstset` part.
+%     - Do NOT leave any blank lines in commands
+%       (`\lstddefinelanguage', `\lstdefinestyle` and `\lstset`)
+%
+% update: 2014-04-16
+% version: 0.1
+% author: kongs
+% licence: MIT
+% url: https://gist.github.com/kongs-sublime/10862838
+%
+% TODO: 
+%       - finish keyword list.
+%       - precise colors that match stata editor?
+%       - make it flexible(fonts and style)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}
+\usepackage{fontspec}
+
+\usepackage{accsupp}% http://ctan.org/pkg/accsupp
+\newcommand{\emptyaccsupp}[1]{\BeginAccSupp{ActualText={}}#1\EndAccSupp{}}
+
+% langugae defination
+\lstdefinelanguage{Stata}{
+    % Left for users to add missing commands,
+    % with possibility of choosing different style.
+    morekeywords=,
+    % Popular add-on commands
+    morekeywords=[2]{cntrade, chinafin, 
+                     wbopendata, spmap,
+    },
+    % System commands
+    morekeywords=[3]{regress, summarize, 
+                     display,
+    },
+    % Keywords
+    morekeywords=[4]{forvalues, if, foreach, set},
+    % Built-in functions
+    morekeywords=[5]{rnormal, runiform},
+    morecomment=[l]{//},
+    % morecomment=[l]{*},  // `*` maybe used as multiply operator. So use `//` as line comment.
+    morecomment=[s]{/*}{*/},
+    % morecomment=[s]{,}{//},
+    % The following is used by macros, like `lags'.
+    morecomment=[n][keywordstyle9]{`}{'},
+    morestring=[b]",
+    sensitive=true,
+}
+
+\lstdefinestyle{numbers}{
+    numbers=left, 
+    stepnumber=1, 
+    numberstyle=\tiny\emptyaccsupp,
+    xleftmargin=2em,
+}
+
+\lstdefinestyle{nonumbers}{
+    numbers=none,
+}
+
+\lstdefinestyle{stata-plain}{
+    % comment slanted and keywords bolded.
+    language=Stata,
+    basicstyle=\setmonofont{Consolas}\footnotesize\ttfamily,
+}
+
+\lstdefinestyle{stata-editor}{
+    language=Stata,
+    % size of the fonts for the code
+    basicstyle=\setmonofont{Consolas}\footnotesize\ttfamily,  
+    % Color settings to match do-file editor style
+    % Commands that are not included in the defination
+    keywordstyle={\color{NavyBlue}},  
+    % Popular add-on commands
+    keywordstyle=[2]{\color{NavyBlue}},
+    % System commands
+    keywordstyle=[3]{\color{NavyBlue}},
+    % Keywords
+    keywordstyle=[4]{\color{NavyBlue}},
+    % Built-in functions like rnormal
+    keywordstyle=[5]{\color{Blue}},
+    % Used by macros, i.e. `lags'  
+    keywordstyle=[9]{\color{TealBlue}},
+    stringstyle=\color{Maroon},
+    commentstyle=\color{OliveGreen},
+}
+
+
+\lstset{
+    language=Stata,
+    style=stata-plain,
+    % style=stata-editor,
+    style=numbers,
+    showstringspaces=false,
+    breaklines,
+    frame=single,
+    % To add missing commands
+    % morekeywords={xtreg, xtunitroot},
+}
