@@ -8,3 +8,5 @@ This work is an assignment for ECOM90003 Applied Micro-econometrics at the Unive
 'Stata-paper-results-replication' combines above do files. 
 
 'ZelinC_paper_replication.pdf' is my submission for this assigment.
+
+I received HD for this assignment.
